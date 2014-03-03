@@ -63,7 +63,9 @@ Yes.
 
 == Screenshots ==
 
-1. Easy configure on user's Profile page.
+1. Hacker needs to know this `secret key` to login as administrator.
+2. Captcha code for login page (to prevent a brutforce attack)
+3. Easy configure on user's Profile page.
 
 == Changelog ==
 
