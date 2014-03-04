@@ -3,7 +3,7 @@
 Plugin Name: WP Admin Protection (by SiteGuarding.com)
 Plugin URI: http://www.siteguarding.com/en/website-extensions
 Description: Adds secret password link for admin login page, captcha code for login page, white/black IP list 
-Version: 1.3
+Version: 1.4
 Author: SiteGuarding.com (SafetyBis Ltd.)
 Author URI: http://www.siteguarding.com
 License: GPLv2
@@ -12,6 +12,7 @@ TextDomain: plgwpap
 
 DEFINE( 'PLGWPAP_PLUGIN_URL', trailingslashit( WP_PLUGIN_URL ) . basename( dirname( __FILE__ ) ) );
 
+error_reporting(0);
 
 if( !is_admin() ) {
 
