@@ -22,18 +22,19 @@ WP Admin Protection prevents access to administration area without appropriate a
 plugin adds a higher level of security to your WordPress website. Even with the correct login 
 and password the hacker will not get access to administrator area without special secret key.
 
-Example: http://www.your-website.com/wp-login.php?Your_Access_Password 
+> Example: http://www.your-website.com/wp-login.php?Your_Access_Password 
 
 Hacker needs to know this Your_Access_Password (secret key) to login as administrator.
 
-Main features:
+**Main features:**
+
 * Easy to install, easy to use
 * Captcha codes for your WP login page (to prevent a brutforce attack)
 * White IP list (these user can login without extra security, e.g. you can set your own IP address)
 * Black IP list (these users will never get access to your administrator area)
 * Prevent password brute force attack with strong "secret key"
 * Notifications by email about all not authorized actions
-* Free support by email (support@siteguarding.com)
+* Free support by email, live chat and by phone (https://www.siteguarding.com/en/contacts)
 
 
 == Installation ==
@@ -45,19 +46,33 @@ Main features:
 5. On administrator's detailed page, you will see `Security Access Options` and configure the access settings
 6. If you need full version, please visit https://www.siteguarding.com/en/wordpress-admin-protection
 
+> For any questions and support please visit https://www.siteguarding.com/en/wordpress-admin-protection
+
 
 == Frequently Asked Questions ==
 
-= What is the difference between Free and Paid =
+= Q: Why should I use WP Admin Protection plugin? =
 
-The difference only in the limits.
+A: Our plugin gives extra security for your WordPress website and prevent a brutforce attack to your administrator area.
+Also everytime when you or someone got access to your administrator area, you will get a notigication by email. 
+
+= Q: Will WP Admin Protection plugin slow my site down? =
+A: No.
+
+= Q: What to do if I have a problem or forgot my `secret key`?
+
+A: Contact with us (https://www.siteguarding.com/en/contacts), provide FTP access to your website and we will recover/reset your `secret key`. 
+
+= Q: What is the difference between Free and Paid =
+
+A: The difference only in the limits.
 E.g. in free version the maximum `secret key` is 4 symbols, full version doesnt have this limitation.   
 Complete list of the limits you can see here https://www.siteguarding.com/en/wordpress-admin-protection
 
 
-= Do you provide support for free version =
+= Q: Do you provide support for free version =
 
-Yes.
+A: Yes. Our contacts are there https://www.siteguarding.com/en/contacts
 
 
 
