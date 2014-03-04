@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: SiteGuarding
 Donate link: https://www.siteguarding.com/en/website-extensions
-Tags: access, security, block, blocked, attack, security, hack, hackers, hacking, login, login alerts, login security, malware, permissions, personal security, protection, secure login, secure website, security plugin, two factor security, two-factor, twofactor, users, virus, vulnerability, web server security, website security
+Tags: access, security, block, blocked, attack, security, hack, hacker, hacking, login, login alerts, login security, malware, permissions, personal security, protection, secure login, secure website, security plugin, two factor security, two-factor, twofactor, users, virus, vulnerability, web server security, website security, scan, admin security, admin, ban hacker, login captcha, front-end security, wordpress security
 Requires at least: 3.0
 Tested up to: 3.8.1 
 Stable tag: 1.4
