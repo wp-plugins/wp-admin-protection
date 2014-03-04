@@ -3,7 +3,7 @@
 Plugin Name: WP Admin Protection (by SiteGuarding.com)
 Plugin URI: http://www.siteguarding.com/en/website-extensions
 Description: Adds secret password link for admin login page, captcha code for login page, white/black IP list 
-Version: 1.2
+Version: 1.4
 Author: SiteGuarding.com (SafetyBis Ltd.)
 Author URI: http://www.siteguarding.com
 License: GPLv2
@@ -12,6 +12,7 @@ TextDomain: plgwpap
 
 DEFINE( 'PLGWPAP_PLUGIN_URL', trailingslashit( WP_PLUGIN_URL ) . basename( dirname( __FILE__ ) ) );
 
+error_reporting(0);
 
 if( !is_admin() ) {
 
@@ -46,11 +47,16 @@ if( !is_admin() ) {
         }
         
         // Check Limits
-        if (wpap_CheckLimits($params) !== true)
+        $limits_flag = wpap_CheckLimits($params);
+        if ($limits_flag !== true)
         {
             $trust_ip = false; 
-            $params['enable_recaptcha'] = 0;   
+            $params['enable_recaptcha'] = 0; 
+
+			echo '<p style="background-color: #FFEBE8; border: 1px solid #CC0000; padding:5px; margin: 5px 0">'.$limits_flag.' <b>Plugin is disabled.</b> For full version please <a target="_blank" href="https://www.siteguarding.com/en/wordpress-admin-protection">click here</a></p>';
+
         }
+
         
         $secret = trim(key($_GET));
         if ($secret == '') $secret = trim($_POST['secret']);
@@ -85,7 +91,12 @@ if( !is_admin() ) {
         
         $ip_addr = $_SERVER['REMOTE_ADDR'];
         
-        $params = wpap_GetExtraParams(1);
+        if ($raw_user->roles[0] == 'administrator')
+        {
+        	$user_id = $raw_user->data->ID; 	
+        }
+        else $user_id = 1; 
+        $params = wpap_GetExtraParams($user_id);
         
         // Check IP
         $trust_ip = false;
@@ -96,14 +107,13 @@ if( !is_admin() ) {
         
         
         // Check Limits
-        if ($limits_flag = wpap_CheckLimits($params) !== true)
+        $limits_flag = wpap_CheckLimits($params);
+        if ( $limits_flag !== true)
         {
             $trust_ip = false; 
             $params['enable_recaptcha'] = 0;
             $limits_flag = false;   
         }
-        
-        
         
         if ($params['enable_recaptcha'] == 1)
         {
@@ -125,13 +135,13 @@ if( !is_admin() ) {
             } 
                      
         }
-        
-        
+      
         if ($raw_user->roles[0] == 'administrator' && $limits_flag)
         {
             //print_r($raw_user);
             $user_id =$raw_user->data->ID; 
-            $secret = wpap_GetSecretByUserID($user_id);
+			$secret = wpap_GetSecretByUserID($user_id);
+
     		if( $_POST['secret'] == md5($secret) || $trust_ip ) 
             {
                 // Secret is correct
@@ -148,7 +158,7 @@ if( !is_admin() ) {
     			return new WP_Error( 'authentication_failed', __( '<strong>ERROR</strong>: Invalid username or incorrect password.', 'plgwpap' ) );
     		}
         }
-        
+
         return $raw_user;
 	}
 	add_filter( 'authenticate', 'plgwpap_authenticate', 999, 2 );
@@ -210,6 +220,13 @@ if( is_admin() ) {
         $params = wpap_GetExtraParams($user_id);
         
 		?>
+		<h3>Personal Options</h3>
+		<tr class="line_1" style="background-color: #eee;">
+		<th scope="row"><h3>Security Access Options</h3></th>
+		<td></td>
+		</tr>
+		
+		
 		<tr class="line_1" style="background-color: #eee; border-bottom: 1px solid #aaa;">
 		<th scope="row"><?php _e( 'Link Access Password', 'plgwpap' )?></th>
 		<td>
@@ -326,7 +343,7 @@ if( is_admin() ) {
             </script>
             <input type="text" name="reg_code" id="reg_code" value="<?php echo $params['reg_code']; ?>" class="regular-text">
 			<a id="renew_reg_code" class="button-primary"><?php _e ('Update', 'plgwpap' ); ?></a>
-            
+            To buy full version, please <a target="_blank" href="https://www.siteguarding.com/en/wordpress-admin-protection">click here</a>
 		<?php
 		if( isset( $_GET['renew_reg_code'] ) ) 
         {

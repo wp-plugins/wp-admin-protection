@@ -4,7 +4,7 @@ Donate link: https://www.siteguarding.com/en/website-extensions
 Tags: access, security, block, blocked, attack, security, hack, hackers, hacking, login, login alerts, login security, malware, permissions, personal security, protection, secure login, secure website, security plugin, two factor security, two-factor, twofactor, users, virus, vulnerability, web server security, website security
 Requires at least: 3.0
 Tested up to: 3.8.1 
-Stable tag: 1.2
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,32 +22,65 @@ WP Admin Protection prevents access to administration area without appropriate a
 plugin adds a higher level of security to your WordPress website. Even with the correct login 
 and password the hacker will not get access to administrator area without special secret key.
 
-Example: http://www.your-website.com/wp-login.php?Your_Access_Password 
+> Example: http://www.your-website.com/wp-login.php?Your_Access_Password 
 
 Hacker needs to know this Your_Access_Password (secret key) to login as administrator.
 
-Main features:
+**Main features:**
+
 * Easy to install, easy to use
 * Captcha codes for your WP login page (to prevent a brutforce attack)
 * White IP list (these user can login without extra security, e.g. you can set your own IP address)
 * Black IP list (these users will never get access to your administrator area)
 * Prevent password brute force attack with strong "secret key"
 * Notifications by email about all not authorized actions
-* Free support by email (support@siteguarding.com)
+* Free support by email, live chat and by phone (https://www.siteguarding.com/en/contacts)
 
 
 == Installation ==
 
 1. Upload `wp-admin-protection.php` and `recaptchalib.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Go to menu Users
+4. Find your admin user and click edit
+5. On administrator's detailed page, you will see `Security Access Options` and configure the access settings
+6. If you need full version, please visit https://www.siteguarding.com/en/wordpress-admin-protection
+
+> For any questions and support please visit https://www.siteguarding.com/en/wordpress-admin-protection
 
 
 == Frequently Asked Questions ==
 
+= Q: Why should I use WP Admin Protection plugin? =
+
+A: Our plugin gives extra security for your WordPress website and prevent a brutforce attack to your administrator area.
+Also everytime when you or someone got access to your administrator area, you will get a notigication by email. 
+
+= Q: Will WP Admin Protection plugin slow my site down? =
+A: No.
+
+= Q: What to do if I have a problem or forgot my `secret key`?
+
+A: Contact with us (https://www.siteguarding.com/en/contacts), provide FTP access to your website and we will recover/reset your `secret key`. 
+
+= Q: What is the difference between Free and Paid =
+
+A: The difference only in the limits.
+E.g. in free version the maximum `secret key` is 4 symbols, full version doesnt have this limitation.   
+Complete list of the limits you can see here https://www.siteguarding.com/en/wordpress-admin-protection
+
+
+= Q: Do you provide support for free version =
+
+A: Yes. Our contacts are there https://www.siteguarding.com/en/contacts
+
+
 
 == Screenshots ==
 
-1. Easy configure on user's Profile page.
+1. Hacker needs to know this `secret key` to login as administrator.
+2. Captcha code for login page (to prevent a brutforce attack)
+3. Easy configure on user's Profile page.
 
 == Changelog ==
 
