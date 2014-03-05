@@ -4,7 +4,7 @@ Donate link: https://www.siteguarding.com/en/website-extensions
 Tags: access, security, block, blocked, attack, security, hack, hacker, hacking, login, login alerts, login security, malware, permissions, personal security, protection, secure login, secure website, security plugin, two factor security, two-factor, twofactor, users, virus, vulnerability, web server security, website security, scan, admin security, admin, ban hacker, login captcha, front-end security, wordpress security
 Requires at least: 3.0
 Tested up to: 3.8.1 
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,9 +22,9 @@ WP Admin Protection prevents access to administration area without appropriate a
 plugin adds a higher level of security to your WordPress website. Even with the correct login 
 and password the hacker will not get access to administrator area without special secret key.
 
-> Example: http://www.your-website.com/wp-login.php?Your_Access_Password 
+> Example: http://www.your-website.com/wp-login.php?Your_Secret_Word 
 
-Hacker needs to know this Your_Access_Password (secret key) to login as administrator.
+Hacker needs to know this Your_Secret_Word (secret key) to login as administrator.
 
 **Main features:**
 
@@ -83,5 +83,12 @@ A: Yes. Our contacts are there https://www.siteguarding.com/en/contacts
 3. Easy configure on user's Profile page.
 
 == Changelog ==
+
+= 1.5 =
+* Extra notifications for administrator.
+* Some design moments.
+
+= 1.4 =
+* Changes in the core and notification system.
 
 == Upgrade Notice ==
