@@ -4,7 +4,7 @@ Donate link: https://www.siteguarding.com/en/website-extensions
 Tags: access, security, block, blocked, attack, security, hack, hacker, hacking, login, login alerts, login security, malware, permissions, personal security, protection, secure login, secure website, security plugin, two factor security, two-factor, twofactor, users, virus, vulnerability, web server security, website security, scan, admin security, admin, ban hacker, login captcha, front-end security, wordpress security
 Requires at least: 3.0
 Tested up to: 3.8.1 
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
