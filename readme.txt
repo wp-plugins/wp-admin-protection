@@ -4,7 +4,7 @@ Donate link: https://www.siteguarding.com/en/website-extensions
 Tags: access, security, block, blocked, attack, security, hack, hacker, hacking, login, login alerts, login security, malware, permissions, personal security, protection, secure login, secure website, security plugin, two factor security, two-factor, twofactor, users, virus, vulnerability, web server security, website security, scan, admin security, admin, ban hacker, login captcha, front-end security, wordpress security
 Requires at least: 3.0
 Tested up to: 3.8.1 
-Stable tag: 1.7
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,11 +68,6 @@ A: Contact with us (https://www.siteguarding.com/en/contacts), provide FTP acces
 A: The difference only in the limits.
 E.g. in free version the maximum `secret key` is 4 symbols, full version doesnt have this limitation.   
 Complete list of the limits you can see here https://www.siteguarding.com/en/wordpress-admin-protection
-
-
-= Q: Do you provide support for free version =
-
-A: Yes. Our contacts are there https://www.siteguarding.com/en/contacts
 
 
 

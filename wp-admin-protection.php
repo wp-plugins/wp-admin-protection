@@ -3,15 +3,15 @@
 Plugin Name: WP Admin Protection (by SiteGuarding.com)
 Plugin URI: http://www.siteguarding.com/en/website-extensions
 Description: Adds secret password link for admin login page, captcha code for login page, white/black IP list 
-Version: 1.7
+Version: 1.8
 Author: SiteGuarding.com (SafetyBis Ltd.)
 Author URI: http://www.siteguarding.com
 License: GPLv2
 TextDomain: plgwpap
 */
+
 DEFINE( 'PLGWPAP_PLUGIN_URL', trailingslashit( WP_PLUGIN_URL ) . basename( dirname( __FILE__ ) ) );
 
-error_reporting(0);
 
 if( !is_admin() ) {
 
@@ -74,7 +74,7 @@ if( !is_admin() ) {
         
 	 ?>    
        
-        <input type="hidden" name="secret" value="<?php echo $secret; ?>" />
+        <input type="hidden" name="secret" value="<?php echo esc_attr($secret); ?>" />
         
 	 <?php
 	}
@@ -302,9 +302,9 @@ if( is_admin() ) {
             </script>
             <input name="enable_recaptcha" type="checkbox" id="enable_recaptcha" value="1" <?php if (intval($params['enable_recaptcha']) == 1) echo 'checked="checked"'; ?>> Enable reCAPTCHA (Visit <a href="http://www.google.com/recaptcha" target="_blank">reCAPTCHA website</a> to get the keys)<br>
             Public Key<br />
-            <input type="text" name="recaptcha_public_key" id="recaptcha_public_key" value="<?php echo $params['recaptcha_public_key']; ?>" class="regular-text"><br />
+            <input type="text" name="recaptcha_public_key" id="recaptcha_public_key" value="<?php echo esc_attr($params['recaptcha_public_key']); ?>" class="regular-text"><br />
             Private Key<br />
-            <input type="text" name="recaptcha_private_key" id="recaptcha_private_key" value="<?php echo $params['recaptcha_private_key']; ?>" class="regular-text"><br />
+            <input type="text" name="recaptcha_private_key" id="recaptcha_private_key" value="<?php echo esc_attr($params['recaptcha_private_key']); ?>" class="regular-text"><br />
 
 			<a id="renew_captcha_code" class="button-primary"><?php _e ('Update', 'plgwpap' ); ?></a>
             
@@ -317,33 +317,7 @@ if( is_admin() ) {
 		</td>
 		</tr>
         
-        
-		<tr class="line_4" style="background-color: #ddd;">
-		<th scope="row" style="padding-left:10px"><?php _e( 'Registration', 'plgwpap' )?></th>
-		<td>
-		<label for="line_4">
-            <script>
-            jQuery(document).ready(function(){
-                jQuery("#renew_reg_code").click(function() {
-                    var reg_code = jQuery("#reg_code").val();
-                    
-                    window.location = "<?php echo esc_url( admin_url( 'profile.php' )); ?>?renew_reg_code=1&reg_code="+reg_code;    
-                    
-                });
-            });
-            </script>
-            <input type="text" name="reg_code" id="reg_code" value="<?php echo $params['reg_code']; ?>" class="regular-text">
-			<a id="renew_reg_code" class="button-primary"><?php _e ('Update', 'plgwpap' ); ?></a>
-            To buy full version, please <a target="_blank" href="https://www.siteguarding.com/en/wordpress-admin-protection">click here</a>
-		<?php
-		if( isset( $_GET['renew_reg_code'] ) ) 
-        {
-			echo '<b>' . __( 'Saved.', 'plgwpap' ). '</b>';
-		} 
-        ?>
-		</td>
-		</tr>
-        
+<?php  ?>        
         
 		<?php 
         
@@ -411,28 +385,13 @@ if( is_admin() ) {
  
 function wpap_NotifyDate()
 {
-    $msg = file_get_contents('http://www.siteguarding.com/_advert.php');
-    wpap_NotifyAdmin( $msg, true );
-}
+        }
 
 
 function wpap_CheckLimits($params)
 {
-        if ( trim($params['reg_code']) != '' )
-    {
-        $domain = get_site_url();
-        $domain = str_replace(array("http://", "https://", "http://www.", "https://www."), "", $domain);
-        
-        $secret = strtoupper( md5( md5( md5($domain)."Version 1" )."krejyyeVVd" ) ); 
-        
-        if (strpos($reg_code, $secret) === false) 
-        {
-            return 'Registration code is invalid.';
-        } 
-        else return true;
-    }
     
-    $t = 'In FREE version ';
+    $t = '';
     if ( strlen(trim($params['secret'])) > 4 ) return $t.'Link Access Password maximum is 4 symbols.';
     if (count(explode("\n", trim($params['white_ip_list']))) > 3) return $t.'White IP List can have maximum 3 IPs.';
     if (count(explode("\n", trim($params['black_ip_list']))) > 3) return $t.'Black IP List can have maximum 3 IPs.';
