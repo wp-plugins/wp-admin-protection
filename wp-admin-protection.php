@@ -10,8 +10,7 @@ License: GPLv2
 TextDomain: plgwpap
 */
 
-DEFINE( 'PLGWPAP_PLUGIN_URL', trailingslashit( WP_PLUGIN_URL ) . basename( dirname( __FILE__ ) ) );
-
+error_reporting(E_ERROR | E_WARNING);
 
 if( !is_admin() ) {
 
@@ -49,7 +48,7 @@ if( !is_admin() ) {
             $trust_ip = false; 
             $params['enable_recaptcha'] = 0; 
 
-			echo '<p style="background-color: #FFEBE8; border: 1px solid #CC0000; padding:5px; margin: 5px 0">'.$limits_flag.' <b>Plugin is disabled.</b> For full version please <a target="_blank" href="https://www.siteguarding.com/en/wordpress-admin-protection">click here</a></p>';
+			echo '<p style="background-color: #FFEBE8; border: 1px solid #CC0000; padding:5px; margin: 5px 0">'.$limits_flag.' <b>Plugin is disabled.</b> For PRO version please <a target="_blank" href="https://www.siteguarding.com/en/wordpress-admin-protection">click here</a></p>';
 
         }
 
@@ -328,7 +327,7 @@ if( is_admin() ) {
             ?>
             <script>
             jQuery(document).ready(function(){
-                alert('<?php echo $error; ?> Plugin will not work correct. Please buy full version.');
+                alert('<?php echo $error; ?> Plugin will not work correct. Please use PRO version.');
             });
             </script>
             
