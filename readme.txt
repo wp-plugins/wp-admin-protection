@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: SiteGuarding
 Donate link: https://www.siteguarding.com/en/website-extensions
-Tags: access, security, block, blocked, attack, security, hack, hacker, hacking, login, login alerts, login security, malware, permissions, personal security, protection, secure login, secure website, security plugin, two factor security, two-factor, twofactor, users, virus, vulnerability, web server security, website security, scan, admin security, admin, ban hacker, login captcha, front-end security, wordpress security
+Tags: protection, security, hack, secure login, website security, admin security, captcha, security plugin, attack, login security, admin protection, virus, wordpress security, ban hacker, login alerts
 Requires at least: 3.0
 Tested up to: 3.8.1 
 Stable tag: 1.8
@@ -34,7 +34,9 @@ Hacker needs to know this Your_Secret_Word (secret key) to login as administrato
 * Black IP list (these users will never get access to your administrator area)
 * Prevent password brute force attack with strong "secret key"
 * Notifications by email about all not authorized actions
-* Free support by email, live chat and by phone (https://www.siteguarding.com/en/contacts)
+* Support by email, live chat and by phone (https://www.siteguarding.com/en/contacts)
+
+To protect whole website against viruses, malware any hacker activity visit http://www.siteguarding.com
 
 
 == Installation ==
@@ -78,6 +80,12 @@ Complete list of the limits you can see here https://www.siteguarding.com/en/wor
 3. Easy configure on user's Profile page.
 
 == Changelog ==
+
+= 1.8 =
+* Code optimizations.
+
+= 1.7 =
+* Code optimizations.
 
 = 1.6 =
 * Code optimizations.
