@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: SiteGuarding
-Donate link: https://www.siteguarding.com/en/website-extensions
+Donate link: https://www.siteguarding.com/en/wordpress-admin-protection
 Tags: protection, security, hack, secure login, website security, admin security, captcha, security plugin, attack, login security, admin protection, virus, wordpress security, ban hacker, login alerts
 Requires at least: 3.0
 Tested up to: 3.8.1 
-Stable tag: 1.8
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,7 +77,7 @@ Complete list of the limits you can see here https://www.siteguarding.com/en/wor
 
 1. Hacker needs to know this `secret key` to login as administrator.
 2. Captcha code for login page (to prevent a brutforce attack)
-3. Easy configure on user's Profile page.
+3. Easy to configure in Settings section.
 
 == Changelog ==
 
