@@ -4,7 +4,7 @@ Donate link: https://www.siteguarding.com/en/wordpress-admin-protection
 Tags: protection, security, hack, secure login, website security, admin security, captcha, security plugin, attack, login security, admin protection, virus, wordpress security, ban hacker, login alerts
 Requires at least: 3.0
 Tested up to: 3.8.1 
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,21 +80,5 @@ Complete list of the limits you can see here https://www.siteguarding.com/en/wor
 3. Easy to configure in Settings section.
 
 == Changelog ==
-
-= 1.8 =
-* Code optimizations.
-
-= 1.7 =
-* Code optimizations.
-
-= 1.6 =
-* Code optimizations.
-
-= 1.5 =
-* Extra notifications for administrator.
-* Some design moments.
-
-= 1.4 =
-* Changes in the core and notification system.
 
 == Upgrade Notice ==
