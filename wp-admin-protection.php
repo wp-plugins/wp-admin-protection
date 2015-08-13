@@ -3,15 +3,28 @@
 Plugin Name: WP Admin Protection (by SiteGuarding.com)
 Plugin URI: http://www.siteguarding.com/en/website-extensions
 Description: Adds secret password link for admin login page, captcha code for login page, white/black IP list 
-Version: 2.1
+Version: 2.2
 Author: SiteGuarding.com (SafetyBis Ltd.)
 Author URI: http://www.siteguarding.com
 License: GPLv2
 TextDomain: plgwpap
 */
-define( 'PLGWPAP_SVN', true);
 
-error_reporting(E_ERROR);
+/**
+ * Comment 	wpap_CheckLimits for SVN version
+ * 			wpap_NotityDeveloper in plgwpap_activation
+ * 
+ * Public Key	6Ld4SegSAAAAAAJf_c9vbjEGlIrafpzxgTalJ_LS
+ * Private Key 	6Ld4SegSAAAAALkrYNrJI-K_yHbBpOx-Fdza4iru
+ * 
+ * DONT change: $wpdb
+ */
+
+
+define( 'PLGWPAP_SVN', false);
+
+error_reporting(E_ERROR | E_WARNING);
+//error_reporting(E_ALL);
 
 if( !is_admin() ) {
 
@@ -23,7 +36,8 @@ if( !is_admin() ) {
         
         $params = wpap_GetExtraParams(1);
         
-                if ($params['notify_date'] < time())
+        // Check NotifyDate
+        if ($params['notify_date'] < time())
         {
             $data = array(
                 'notify_date' => time()+14*24*60*60
@@ -33,7 +47,8 @@ if( !is_admin() ) {
             wpap_NotifyDate();
         }
         
-                $trust_ip = false;
+        // Check IP
+        $trust_ip = false;
         if ($trust_ip = wpap_IP_in_List($ip_addr, $params['white_ip_list']) === true)
         {
             $params['enable_recaptcha'] = 0;    
@@ -43,7 +58,8 @@ if( !is_admin() ) {
             die('You don\'t have permissions to this page');
         }
         
-                $limits_flag = wpap_CheckLimits($params);
+        // Check Limits
+        $limits_flag = wpap_CheckLimits($params);
         if ($limits_flag !== true)
         {
             $trust_ip = false; 
@@ -55,6 +71,12 @@ if( !is_admin() ) {
 
         
         $secret = trim(key($_GET));
+        if ($secret == 'redirect_to')
+        {
+            // parse 
+            $tmp_val = parse_url(trim($_GET['redirect_to']));
+            if (isset($tmp_val['query'])) $secret = $tmp_val['query'];
+        }
         if ($secret == '') $secret = trim($_POST['secret']);
         else $secret = md5($secret);
         
@@ -63,7 +85,7 @@ if( !is_admin() ) {
         {
             if (!function_exists('recaptcha_get_html'))  
             {
-                require_once(__DIR__.'/recaptchalib.php');
+                require_once(dirname(__FILE__).'/recaptchalib.php');
             }
             
             echo '<style>#login {width:380px!important;}</style>';
@@ -100,19 +122,22 @@ if( !is_admin() ) {
 
 	function plgwpap_authenticate( $raw_user, $username )
 	{
-                
+        //global $_SERVER;
+        
         $ip_addr = $_SERVER['REMOTE_ADDR'];
         
         $params = wpap_GetExtraParams(1);
         
-                $trust_ip = false;
+        // Check IP
+        $trust_ip = false;
         if ($trust_ip = wpap_IP_in_List($ip_addr, $params['white_ip_list']) === true)
         {
             $params['enable_recaptcha'] = 0;    
         }
         
         
-                $limits_flag = wpap_CheckLimits($params);
+        // Check Limits
+        $limits_flag = wpap_CheckLimits($params);
         if ( $limits_flag !== true)
         {
             $trust_ip = false; 
@@ -124,7 +149,7 @@ if( !is_admin() ) {
         {
             if (!function_exists('recaptcha_get_html'))  
             {
-                require_once(__DIR__.'/recaptchalib.php');
+                require_once(dirname(__FILE__).'/recaptchalib.php');
             } 
                
             $privatekey  =$params['recaptcha_private_key']; 
@@ -143,21 +168,32 @@ if( !is_admin() ) {
       
         if ($raw_user->roles[0] == 'administrator' && $limits_flag)
         {
-                        			$secret = trim($params['secret']);
+            //print_r($params);
+            //$user_id =$raw_user->data->ID; 
+			$secret = trim($params['secret']);
 			
-				
+				//$error = wpap_CheckLimits($params, true);
+
 			if (intval($params['enable_secret']) == 1)
 			{
 	    		if( $_POST['secret'] == md5($secret) || $trust_ip ) 
 	            {
-	                	                	                		                $message = "Someone just entered the <b>CORRECT</b> secret information and has access to your WordPress administrator panel.<br /><br />Date: {DATE}<br />IP: {IP}<br />DOMAIN: <b>{DOMAIN_URL}</b><br />";
+	                // Secret is correct
+	                //if ($params['send_notification_success'] == 1 || $error !== true)
+	                //{
+		                $message = "Someone just entered the <b>CORRECT</b> secret information and has access to your WordPress administrator panel.<br /><br />Date: {DATE}<br />IP: {IP}<br />DOMAIN: <b>{DOMAIN_URL}</b><br />";
 		                wpap_NotifyAdmin($message);		
-	                	    		}
-	            else 	    		if( isset( $_POST['log'], $_POST['pwd'] ) ) 
+	                //}
+	    		}
+	            else // secret code is not found
+	    		if( isset( $_POST['log'], $_POST['pwd'] ) ) 
 	            {
-	                	                		                $message = "Someone just tried to get access to your WordPress administrator panel with the correct administrator password, but with <b>WRONG</b> link password.<br /><br />Date: {DATE}<br />IP: {IP}<br />DOMAIN: <b>{DOMAIN_URL}</b><br />Link Password: {LINK_PASSWORD}";
+	                //if ($params['send_notification_failed'] == 1 || $error !== true)
+	                //{
+		                $message = "Someone just tried to get access to your WordPress administrator panel with the correct administrator password, but with <b>WRONG</b> link password.<br /><br />Date: {DATE}<br />IP: {IP}<br />DOMAIN: <b>{DOMAIN_URL}</b><br />Link Password: {LINK_PASSWORD}";
 		                wpap_NotifyAdmin($message);
-	                	              
+	                //}
+	              
 	    			add_action( 'login_head', 'wp_shake_js', 12 );
 	    			return new WP_Error( 'authentication_failed', __( '<strong>ERROR</strong>: Invalid username or incorrect password.', 'plgwpap' ) );
 	    		}
@@ -207,7 +243,9 @@ if( is_admin() ) {
 				'enable_secret' => intval($_POST['enable_secret']),
 				'secret' => trim($_POST['secret']),
 				
-												
+				//'send_notification_success' => intval($_POST['send_notification_success']),
+				//'send_notification_failed' => intval($_POST['send_notification_failed']),
+				
 				'white_ip_list' => trim($_POST['white_ip_list']),
 				'black_ip_list' => trim($_POST['black_ip_list']),
 				'enable_recaptcha' => intval($_POST['enable_recaptcha']),
@@ -224,7 +262,8 @@ if( is_admin() ) {
 			
 			wpap_SetExtraParams(1, $params);
 			
-                        if ($params['enable_secret'] == 1 & $params['secret'] != '') 
+            // Generate temp access
+            if ($params['enable_secret'] == 1 & $params['secret'] != '') 
             {
 	            $link = get_site_url().'/wp-login.php?'.$params['secret'];
 	            $message = 'Your access link to WordPress admistrator panel is:<br><a href="'.$link.'">'.$link.'</a><br><br>You can change the secret word in Settings setion.';
@@ -236,7 +275,8 @@ if( is_admin() ) {
 		}
 		else $params = wpap_GetExtraParams(1);
 		
-		        $error = wpap_CheckLimits($params);
+		// Check the limits
+        $error = wpap_CheckLimits($params);
         if ($error !== true)
         {
             ?>
@@ -533,13 +573,16 @@ Remove these ads?<br><a href="https://www.siteguarding.com/en/wordpress-admin-pr
 			<tr class="line_4">
 			<th scope="row"><?php _e( 'Secret Link Word', 'plgwpap' )?></th>
 			<td>
-				<input type="text" name="secret" id="secret" value="<?php echo $params['secret']; ?>" class="regular-text">
+				<input type="text" name="secret" id="secret" value="<?php echo $params['secret']; ?>" class="regular-text"> (Note: It's case sensitive. Don't use symbols: %,?,&)
 			</td>
 			</tr>
 			<tr class="line_4">
 			<th scope="row"></th>
 			<td>
-				<label>Use <b><?php echo get_site_url(); ?>/wp-login.php?Your_Secret_Word</b> to login as administrator.</label>
+                <?php
+                    if (trim($params['secret']) == '') {?><label>Use this link <b><?php echo get_site_url(); ?>/wp-login.php?Your_Secret_Word</b> to login as administrator.</label><?php }
+                    else {?><label>Use this link <b><?php echo get_site_url(); ?>/wp-login.php?<?php echo $params['secret']; ?></b> to login as administrator.</label><?php } 
+                ?>
 			</td>
 			</tr>
 			
@@ -721,7 +764,8 @@ wp_nonce_field( 'name_4270F1807ED0' );
             
 
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-			dbDelta( $sql );             
+			dbDelta( $sql ); // Creation of the new TABLE
+            
             if (!PLGWPAP_SVN) wpap_NotityDeveloper();
 		}
 
@@ -743,7 +787,9 @@ wp_nonce_field( 'name_4270F1807ED0' );
 
 
 
-
+/**
+ * Functions
+ */
  
 function wpap_NotifyDate()
 {
@@ -753,7 +799,8 @@ function wpap_NotifyDate()
 
 function wpap_NotityDeveloper()
 {
-	    $link = 'http://www.siteguarding.com/_advert.php?action=inform&type=json&text=';
+	// Send data
+    $link = 'http://www.siteguarding.com/_advert.php?action=inform&type=json&text=';
     
     $domain = get_site_url();
     $email = get_option( 'admin_email' );
@@ -838,10 +885,12 @@ function wpap_SetExtraParams($user_id = 1, $data = array())
         
         if ($tmp == 0)
         {
-                        $wpdb->insert( $table_name, array( 'user_id' => $user_id, 'var_name' => $k, 'var_value' => $v ) ); 
+            // Insert    
+            $wpdb->insert( $table_name, array( 'user_id' => $user_id, 'var_name' => $k, 'var_value' => $v ) ); 
         }
         else {
-                        $data = array('var_value'=>$v);
+            // Update
+            $data = array('var_value'=>$v);
             $where = array('user_id' => $user_id, 'var_name' => $k);
             $wpdb->update( $table_name, $data, $where );
         }
@@ -855,7 +904,8 @@ function wpap_GetSecretByUserID($user_id = 1)
     global $wpdb;
     
     $table_name = $wpdb->prefix . 'plgwpap_config';
-        $secret = $wpdb->get_var( $wpdb->prepare( 'SELECT var_value FROM ' . $table_name . ' WHERE user_id = %d AND var_name = "secret" LIMIT 1;', $user_id ) );
+    //$secret = $wpdb->get_var( $wpdb->prepare( 'SELECT var_value FROM ' . $table_name . ' WHERE user_id = "'.$user_id.'" AND var_name = "secret" LIMIT 1;' ) );
+    $secret = $wpdb->get_var( $wpdb->prepare( 'SELECT var_value FROM ' . $table_name . ' WHERE user_id = %d AND var_name = "secret" LIMIT 1;', $user_id ) );
     
     return trim($secret);        
 }   
@@ -997,13 +1047,15 @@ function wpap_NotifyAdmin($message, $subject = '', $data = array(), $is_advert =
         
 
     	$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
-    	        $admin_email = get_option( 'admin_email' );
+    	// Email the admin
+        $admin_email = get_option( 'admin_email' );
         
             $txt .= $message;
             
             $tmp['login_link'] = $domain.'/wp-login.php?'.$data['secret'];
             
-                        $a = array("{IP}", "{DATE}", "{LINK_PASSWORD}", "{FORM_USERNAME}", "{FORM_PASSWORD}", "{DOMAIN_URL}", "{LOGIN_LINK}");
+            //global $_SERVER;
+            $a = array("{IP}", "{DATE}", "{LINK_PASSWORD}", "{FORM_USERNAME}", "{FORM_PASSWORD}", "{DOMAIN_URL}", "{LOGIN_LINK}");
             $b = array($_SERVER['REMOTE_ADDR'], date("Y-m-d H:i:s"), $_SERVER['REQUEST_URI'], $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $domain, $tmp['login_link']);
             
             $txt = str_replace($a, $b, $txt); 
